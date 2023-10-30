@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const hbs = require('express-handlebars');
 
-const multer  = require('multer');
+const multer = require('multer');
 
 const app = express();
 
@@ -15,10 +15,10 @@ const fileStorageEngine = multer.diskStorage({
   },
 });
 
-const upload = multer({ 
-  storage: fileStorageEngine, 
+const upload = multer({
+  storage: fileStorageEngine,
   fileFilter: (req, file, cb) => {
-    if(file.mimetype == 'image/png' || file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg' || file.mimetype == 'image/gif') {
+    if (file.mimetype == 'image/png' || file.mimetype == 'image/jpg' || file.mimetype == 'image/jpeg' || file.mimetype == 'image/gif') {
       cb(null, true);
     } else {
       req.fileError = 'Only .png, .jpg, .jpeg, or .gif files are allowed.';
@@ -63,7 +63,7 @@ app.post('/contact/send-message', upload.single('image'), (req, res) => {
   console.log(req.file);
   const { author, sender, title, message } = req.body;
 
-  if(author && sender && title && message && req.file) {
+  if (author && sender && title && message && req.file) {
     res.render('contact', { isSent: true, fileName: req.file.originalname });
   }
   else {
